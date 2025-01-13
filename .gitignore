@@ -5,6 +5,20 @@
 client/node_modules/
 server/node_modules/
 
+# ===========================
+# Environnement
+# ===========================
+# Ignorer tous les fichiers .env dans client et server
+client/.env                # Fichier contenant les variables d'environnement du client
+client/.env.local          # Variante locale pour les variables d'environnement du client
+client/.env.development    # Environnement de développement pour le client
+client/.env.production     # Environnement de production pour le client
+
+server/.env                # Fichier contenant les variables d'environnement du serveur
+server/.env.local          # Variante locale pour les variables d'environnement du serveur
+server/.env.development    # Environnement de développement pour le serveur
+server/.env.production     # Environnement de production pour le serveur
+
 # Fichiers de log générés par npm ou yarn
 npm-debug.log
 yarn-debug.log
@@ -21,19 +35,6 @@ server/dist/              # Dossier contenant le code compilé pour le serveur E
 client/*.tsbuildinfo
 client/build/             # Dossier contenant le code généré pour le client React
 
-# ===========================
-# Environnement
-# ===========================
-# Ignorer tous les fichiers .env dans client et server
-client/.env                # Fichier contenant les variables d'environnement du client
-client/.env.local          # Variante locale pour les variables d'environnement du client
-client/.env.development    # Environnement de développement pour le client
-client/.env.production     # Environnement de production pour le client
-
-server/.env                # Fichier contenant les variables d'environnement du serveur
-server/.env.local          # Variante locale pour les variables d'environnement du serveur
-server/.env.development    # Environnement de développement pour le serveur
-server/.env.production     # Environnement de production pour le serveur
 
 # ===========================
 # OS & IDE spécifiques
