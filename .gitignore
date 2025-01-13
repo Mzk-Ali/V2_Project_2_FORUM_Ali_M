@@ -1,0 +1,60 @@
+# ===========================
+# Node.js / npm / yarn
+# ===========================
+# Ignorer les dépendances au niveau client et server
+client/node_modules/
+server/node_modules/
+
+# Fichiers de log générés par npm ou yarn
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# ===========================
+# TypeScript
+# ===========================
+# Fichiers générés par TypeScript pour le projet server
+server/*.tsbuildinfo
+server/dist/              # Dossier contenant le code compilé pour le serveur Express
+
+# Fichiers générés par TypeScript pour le projet client (si tu compiles aussi côté client)
+client/*.tsbuildinfo
+client/build/             # Dossier contenant le code généré pour le client React
+
+# ===========================
+# Environnement
+# ===========================
+# Ignorer tous les fichiers .env dans client et server
+client/.env                # Fichier contenant les variables d'environnement du client
+client/.env.local          # Variante locale pour les variables d'environnement du client
+client/.env.development    # Environnement de développement pour le client
+client/.env.production     # Environnement de production pour le client
+
+server/.env                # Fichier contenant les variables d'environnement du serveur
+server/.env.local          # Variante locale pour les variables d'environnement du serveur
+server/.env.development    # Environnement de développement pour le serveur
+server/.env.production     # Environnement de production pour le serveur
+
+# ===========================
+# OS & IDE spécifiques
+# ===========================
+.DS_Store                 # Fichier spécifique à macOS
+.idea/                    # Dossier de configuration de JetBrains IDEs (ex : IntelliJ, WebStorm)
+.vscode/                  # Dossier de configuration de VS Code
+Thumbs.db                 # Fichier spécifique à Windows
+
+# ===========================
+# Log files
+# ===========================
+*.log                     # Tous les fichiers de log
+
+# ===========================
+# Temporary files
+# ===========================
+.tmp/                     # Dossier de fichiers temporaires (créés par des outils ou l'application elle-même)
+
+# ===========================
+# Misc
+# ===========================
+*.swp                     # Fichiers temporaires d'éditeurs (par exemple, Vim)
+*.swo                     # Fichiers temporaires d'éditeurs (par exemple, Vim)
