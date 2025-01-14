@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum pour gérer les statuts d'utilisateur
+enum UserStatus {
+  Active
+  Suspend
+  Delete
+}
+
+// Enum pour les rôles d'utilisateur
+enum RoleName {
+  User
+  Admin
+  SupraAdmin
+}
+
+// Modèle 'Role' pour les rôles d'utilisateur
+model Role {
+  id   Int      @id @default(autoincrement())
+  name RoleName @unique
+  // Relation many-to-many avec User
+  users User[]  @relation("UserRoles")
+}
+
+// Modèle 'User'
+model User {
+  id                  Int         @id @default(autoincrement())
+  email               String      @unique @db.VarChar(100)
+  telephone           String?     @db.VarChar(20)
+  password            String?     @db.VarChar(255)
+  verified            Boolean     @default(false)
+  status              UserStatus  @default(Active)
+  civility            String?     @db.VarChar(30)
+  lastName            String      @db.VarChar(50)
+  firstName           String      @db.VarChar(50)
+  photoProfile        String?     @db.VarChar(255)
+  webpPhotoProfile    String?     @db.VarChar(255)
+  displayFullName     Boolean     @default(true)
+  dateRegistration    DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  roles               Role[]      @relation("UserRoles")
+}
