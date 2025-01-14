@@ -104,3 +104,66 @@ describe('Helmet Middleware Tests', () => {
     });
 });
 
+//  ===========================
+//  Rate Limiters Tests
+//  ===========================
+describe('Rate Limiter Middleware Tests', () => {
+    // Test pour vérifier que le rate limiter du login fonctionne correctement
+    it('should return 429 for too many login attempts', async () => {
+        // Effectuer 5 requêtes de login dans un court laps de temps
+        for (let i = 0; i < 5; i++) {
+            await request(app).post('/login').send({ username: 'test', password: 'password' });
+        }
+    
+        // La 6ème requête doit retourner une erreur 429
+        const response = await request(app).post('/login').send({ username: 'test', password: 'password' });
+        
+        // Vérifie que la réponse a un statut 429 et le bon message
+        expect(response.status).toBe(429);
+        expect(response.body.message).toBe('Trop de tentatives de connexion. Veuillez réessayer après 5 minutes.');
+        });
+
+    // Test pour vérifier que le rate limiter d'enregistrement fonctionne correctement
+    it('should return 429 for too many registration attempts', async () => {
+        // Effectuer 3 requêtes d'enregistrement dans un court laps de temps
+        for (let i = 0; i < 3; i++) {
+            await request(app).post('/register').send({ username: 'test', password: 'password' });
+        }
+    
+        // La 4ème requête doit retourner une erreur 429
+        const response = await request(app).post('/register').send({ username: 'test', password: 'password' });
+    
+        // Vérifie que la réponse a un statut 429 et le bon message
+        expect(response.status).toBe(429);
+        expect(response.body.message).toBe('Trop de tentatives d\'inscription. Veuillez réessayer après 15 minutes.');
+    });
+    
+    // Test pour vérifier que le rate limiter des autres méthodes fonctionne correctement (POST, PUT, PATCH, DELETE)
+    it('should return 429 for too many requests for POST, PUT, PATCH, DELETE methods', async () => {
+        // Effectuer 20 requêtes POST dans un court laps de temps
+        for (let i = 0; i < 20; i++) {
+            await request(app).post('/post').send({ data: 'test' });
+        }
+    
+        // La 21ème requête doit retourner une erreur 429
+        const response = await request(app).post('/post').send({ data: 'test' });
+    
+        // Vérifie que la réponse a un statut 429 et le bon message
+        expect(response.status).toBe(429);
+        expect(response.body.message).toBe('Trop de requêtes pour cette méthode. Veuillez réessayer plus tard.');
+    });
+
+    // Test pour vérifier que le rate limiter général pour les requêtes GET fonctionne correctement
+    it('should return 429 for too many GET requests', async () => {
+        // Effectuer 100 requêtes GET dans un court laps de temps
+        for (let i = 0; i < 100; i++) {
+            await request(app).get('/');
+        }
+    
+        // La 201ème requête GET doit retourner une erreur 429
+        const response = await request(app).get('/');
+        // Vérifie que la réponse a un statut 429 et le bon message
+        expect(response.status).toBe(429);
+        expect(response.body.message).toBe('Trop de requêtes GET. Veuillez réessayer plus tard.');
+    });
+});

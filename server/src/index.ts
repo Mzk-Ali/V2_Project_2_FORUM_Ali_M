@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { useCors } from "./configs/cors";
 import { useHelmet } from "./configs/helmet";
 import { useRateLimit } from "./configs/rateLimit";
-import { useCookieParser } from "./middlewares/cookieParser";
+import { useCookieParser } from "./configs/cookieParser";
 
 // Charge les variables d'environnement
 dotenv.config();
@@ -13,7 +13,7 @@ const PORT = process.env.PORT_BACKEND || 3000;
 // Créer une instance de l'application Express
 const app : Application = express();
 
-// Utilisation des middlewares de sécurité et utilitaires
+// Utilisation des configurations de sécurité
 useCors(app);            // Appliquer CORS
 useHelmet(app);          // Appliquer Helmet
 useRateLimit(app);       // Appliquer le rate limiter
