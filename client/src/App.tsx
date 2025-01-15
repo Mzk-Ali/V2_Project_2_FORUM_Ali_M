@@ -1,4 +1,5 @@
 import { BrowserRouter as Router } from 'react-router-dom';
+import {HelmetProvider} from 'react-helmet-async';
 import './App.css'
 
 import Header from './layout/Header';
@@ -9,9 +10,11 @@ function App() {
 
   return (
     <Router>
-      <Header />
-      <Main />
-      <Footer />
+      <HelmetProvider>
+        <Header />
+        <Main />
+        <Footer />
+      </HelmetProvider>
     </Router>
   )
 }
