@@ -1,7 +1,6 @@
 import request from 'supertest'; // Supertest permet d'envoyer des requêtes HTTP
 import app from '../src/index'; // Importer l'application Express à tester
 
-
 //  ===========================
 //  Root Route Test
 //  ===========================

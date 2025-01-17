@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/configs/rateLimit.ts</title>
+    <title>Code coverage report for src/services/cookie.service.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/configs</a> rateLimit.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/services</a> cookie.service.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -78,36 +78,54 @@
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Application } from "express"
-import { getLimiter, loginLimiter, methodLimiter, registerLimiter } from "../services/rateLimiters.service";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Response } from "express";
+import { createAuthToken } from "../utils/jwt";
 &nbsp;
-export const useRateLimit = (app : Application) =&gt; {
-    // Applique le rate limiter pour la route de login
-    app.use('/login', loginLimiter);
+export const setAuthTokenCookie = <span class="fstat-no" title="function not covered" >(r</span>es: Response, userId: number, email: string, expiresIn: string) =&gt; {
+    const authToken = <span class="cstat-no" title="statement not covered" >createAuthToken(userId, email, expiresIn);</span>
 &nbsp;
-    // Applique le rate limiter pour la route d'enregistrement
-    app.use('/register', registerLimiter);
+<span class="cstat-no" title="statement not covered" >    res.cookie('authToken', authToken, {</span>
+        httpOnly: true, // Pour éviter l'accès JavaScript côté client
+        secure: process.env.NODE_ENV === 'production', // Utilise "secure" uniquement en production (https)
+        maxAge: parseInt(expiresIn) * 60 * 60 * 1000, // Durée du cookie en millisecondes
+        sameSite: 'strict',
+    });
+};
 &nbsp;
-    // Applique le rate limiter pour les autres méthodes sensibles (POST, PUT, PATCH, DELETE)
-    app.use(['/post', '/put', '/patch', '/delete'], methodLimiter);
-&nbsp;
-    // Applique le rate limiter général pour les requêtes GET
-    app.use(getLimiter);
+export const deleteCookie = <span class="fstat-no" title="function not covered" >(r</span>es: Response, cookieName: string) =&gt; {
+    // Supprimer le cookie
+<span class="cstat-no" title="statement not covered" >    res.clearCookie(cookieName, {</span>
+        httpOnly: true,  // Empêche l'accès au cookie via JavaScript
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',  // Protection contre les attaques CSRF
+    });
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
