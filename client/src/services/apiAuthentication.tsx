@@ -21,7 +21,7 @@ export const fetchRegister = async (data: RegisterFormData) => {
 
 
 export const fetchLogin = async ( data:LoginFormData) => {
-    const response = await fetch(`${API_CONFIG.baseUrl + route}/login/proser`, {
+    const response = await fetch(`${API_CONFIG.baseUrl + route}/login/forum`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

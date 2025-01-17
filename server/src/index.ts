@@ -1,14 +1,17 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
+
+// Importation des Configurations
 import { useCors } from "./configs/cors";
 import { useHelmet } from "./configs/helmet";
 import { useRateLimit } from "./configs/rateLimit";
 import { useCookieParser } from "./configs/cookieParser";
 
+// Importation des Routes
+import authRoute from "./routes/auth.routes";
+
 // Charge les variables d'environnement
 dotenv.config();
-// Récupère le port du backend des variables d'environnement
-const PORT = process.env.PORT_BACKEND || 3000;
 
 // Créer une instance de l'application Express
 const app : Application = express();
@@ -23,6 +26,11 @@ useCookieParser(app);    // Appliquer cookie-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
+app.use("/api/auth", authRoute);
+
+
+
 app.get('/', (req, res) => {
     res.json({ message: 'Hello, World!' });
   });
@@ -31,10 +39,5 @@ app.get('/', (req, res) => {
 app.all(/.*/, (req, res) => {
     res.status(404).send("Message erreur 404")
 })
-
-// Lance le serveur
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
-});
 
 export default app;
