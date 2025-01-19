@@ -6,6 +6,44 @@ import { createUser, getUserByEmail, updateUser } from "../models/user.model";
 import { deleteCookie, setAuthTokenCookie } from "../services/cookie.service";
 import { sendVerificationEmail } from "../services/email.service";
 import { decodedToken } from "../utils/jwt";
+import { Prisma } from "@prisma/client";
+import { RequestWithUser } from "../interfaces/requestWithUser.interface";
+
+
+interface Role {
+    name: string;
+}
+// Controller pour récupérer le informations de l'utilisateur connecté
+export const getAuthenticatedUser = async (req: RequestWithUser, res: Response) => {
+    try {
+        // Récupérer l'utilisateur depuis `req.user` (ajouté par le middleware)
+        const user = req.user;
+
+        if (!user) {
+            return errorResponse(res, 'Utilisateur non trouvé', { isAuthenticated: false}, 404);
+        }
+
+        // Vérifier si l'utilisateur a le rôle "Admin"
+        const hasRoleAdmin = user.roles.some(role => role.name === 'Admin');
+
+        // Retourne les informations de l'utilisateur et le statut d'authentification
+        successResponse(res, 200, '', {
+            isAuthenticated: true,
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                photoProfile: user.photoProfile,
+                status: user.status
+            },
+            hasRoleAdmin,
+        });
+    } catch (error) {
+        return errorResponse(res, 'Erreur du serveur', error)
+    }
+}
+
 
 // Controller pour l'inscription d'un utilisateur
 export const register = async (req: Request, res: Response) => {
@@ -34,7 +72,7 @@ export const register = async (req: Request, res: Response) => {
 
         successResponse(res, 201, 'Utilisateur créé avec succès. Un email de vérification a été envoyé.',)
     } catch (error) {
-        errorResponse(res, 'Erreur du serveur', error)
+        return errorResponse(res, 'Erreur du serveur', error)
     }
 }
 
@@ -74,7 +112,7 @@ export const login = async (req: Request, res: Response) => {
         
         successResponse(res, 200, 'Authentification réussie.')
     } catch (error) {
-        errorResponse(res, 'Erreur du serveur', error)
+        return errorResponse(res, 'Erreur du serveur', error)
     }
 }
 
@@ -84,7 +122,7 @@ export const logout = async (req: Request, res: Response) => {
         deleteCookie(res, 'authToken');
         successResponse(res, 201, 'Utilisateur deconnecté.')
     } catch (error) {
-        errorResponse(res, 'Erreur du serveur', error)
+        return errorResponse(res, 'Erreur du serveur', error)
     }
 }
 
@@ -115,6 +153,6 @@ export const verifyEmail = async (req: Request, res: Response) => {
         await updateUser(user.id, { verified: true, status: "Active" });
         res.redirect('/login');
     } catch (error) {
-        errorResponse(res, 'Erreur du serveur', error)
+        return errorResponse(res, 'Erreur du serveur', error)
     }
 }

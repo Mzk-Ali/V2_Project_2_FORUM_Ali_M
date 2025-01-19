@@ -5,15 +5,18 @@ import './App.css'
 import Header from './layout/Header';
 import Main from './layout/Main';
 import Footer from './layout/Footer';
+import AuthProvider from './contexts/AuthProvider';
 
 function App() {
 
   return (
     <Router>
       <HelmetProvider>
-        <Header />
-        <Main />
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <Main />
+          <Footer />
+        </AuthProvider>
       </HelmetProvider>
     </Router>
   )

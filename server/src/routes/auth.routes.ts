@@ -1,9 +1,13 @@
 import express from "express";
-import { login, logout, register, verifyEmail } from "../controllers/auth.controller";
+import { getAuthenticatedUser, login, logout, register, verifyEmail } from "../controllers/auth.controller";
 import { loginValidator, registerValidator } from "../validators/auth.validator";
 import { handleValidationErrors } from "../middlewares/validationError.middleware";
+import { checkAuthenticate } from "../middlewares/authenticate.middleware";
 
 const router = express.Router();
+
+// Route vérifier le status de l'utilisateur
+router.get('/status', checkAuthenticate, getAuthenticatedUser);
 
 // Route pour l'inscription (register)
 router.post('/register', registerValidator, handleValidationErrors, register);

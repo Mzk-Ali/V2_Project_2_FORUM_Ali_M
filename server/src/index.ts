@@ -9,6 +9,7 @@ import { useCookieParser } from "./configs/cookieParser";
 
 // Importation des Routes
 import authRoute from "./routes/auth.routes";
+import sessionMiddleware from "./configs/session";
 
 // Charge les variables d'environnement
 dotenv.config();
