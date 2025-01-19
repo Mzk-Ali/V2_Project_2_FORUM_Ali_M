@@ -3,7 +3,7 @@ import { Application } from 'express';
 
 const corsOptions = {
     origin: [
-        'https://localhost:3000',
+        'http://localhost:3000',
         'https://localhost:5173',
     ],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With'],

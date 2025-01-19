@@ -12,6 +12,9 @@ export const getUserById = async(id: number) =>{
 export const getUserByEmail = async(email: string) =>{
     return await prisma.user.findUnique({
         where: {email},
+        include: {
+            roles: true,
+        }
     });
 };
 
