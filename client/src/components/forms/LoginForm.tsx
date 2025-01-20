@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { fetchLogin } from '../../services/apiAuthentication';
 import { LoginFormData } from '../../types/authentication.d';
+import { useToast } from '../../hooks/useToast';
 
 // Définir le schéma de validation avec Yup
 const validationSchema = Yup.object({
@@ -34,14 +35,17 @@ export default function LoginForm({openForgotPassword}:LoginFormProps) {
         resolver: yupResolver(validationSchema),
     });
     const [error, setError] = useState('');
+    const {showToast} = useToast();
     const navigate = useNavigate();
 
     const mutation = useMutation(fetchLogin, {
         onSuccess: () => {
             reset();
             navigate('/');
+            showToast("Authentification réussie.", 'success');
         },
         onError: (error) => {
+            showToast("Authentification échouée.", 'error');
             if (error instanceof Error) {
                 setError(error.message);
             } else {
