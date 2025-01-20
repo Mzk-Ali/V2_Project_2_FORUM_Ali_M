@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { RegisterFormData } from '../../types/authentication.d';
 import { useMutation } from 'react-query';
 import { fetchRegister } from '../../services/apiAuthentication';
+import { useToast } from '../../hooks/useToast';
 
 
 // Définir le schéma de validation avec Yup
@@ -53,13 +54,16 @@ export default function RegisterForm() {
     const [error, setError] = useState('');
     const [step, setStep] = useState(0);
     const navigate = useNavigate();
+    const {showToast} = useToast();
 
     const mutation = useMutation(fetchRegister, {
         onSuccess: () => {
             reset();
             navigate('/login');
+            showToast("Inscription réussie. Bienvenue au Forum.", 'success');
         },
         onError: (error) => {
+            showToast("Inscription échouée. Veuillez réessayer", 'error');
             if (error instanceof Error) {
                 setError(error.message);
             } else {
