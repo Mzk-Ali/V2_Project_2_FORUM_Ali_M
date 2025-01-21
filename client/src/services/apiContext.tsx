@@ -3,8 +3,19 @@ import { User } from "../types/index.d";
 
 const route = "/api";
 
+interface AuthStatusResponse {
+    status: 'success' | 'error';
+    message: string;
+    data?: {
+        isAuthenticated: boolean;
+        user: User;
+        hasRoleAdmin: boolean;
+    };
+    error?: string;
+}
+
 // Vérifie l'authentification de l'utilisateur et récupère l'état + token + infos
-export const fetchAuthStatus = async (): Promise<{ isAuthenticated: boolean; user: User; hasRoleAdmin : boolean }> => {
+export const fetchAuthStatus = async (): Promise<AuthStatusResponse['data']> => {
     const response = await fetch(`${API_CONFIG.baseUrl + route}/auth/status`, {
         method: 'GET',
         credentials: 'include',
@@ -14,6 +25,10 @@ export const fetchAuthStatus = async (): Promise<{ isAuthenticated: boolean; use
         throw new Error('Erreur lors de la vérification de l\'authentification');
     }
   
-    const data:{ isAuthenticated: boolean; user: User; hasRoleAdmin : boolean } = await response.json();
-    return data;
+    const responseData: AuthStatusResponse = await response.json();
+    if (responseData.status === 'success') {
+        return responseData.data;
+    } else {
+        throw new Error(responseData.message || 'Erreur inconnue');
+    }
 };

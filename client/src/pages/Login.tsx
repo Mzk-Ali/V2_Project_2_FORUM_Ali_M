@@ -11,7 +11,7 @@ export default function Login() {
                 <meta name="description" content="Page de connexion du Forum V2" />
                 <meta name="keywords" content="forum, connexion, login" />
             </Helmet>
-            <h1 className="text-4xl text-center my-10 font-bold bg-gradient-to-r from-blue-800 via-blue-400 to-indigo-400 text-transparent bg-clip-text"><strong>Connexion au Forum</strong></h1>
+            <h1 className="text-4xl text-center py-10 font-bold bg-gradient-to-r from-blue-800 via-blue-400 to-indigo-400 text-transparent bg-clip-text"><strong>Connexion au Forum</strong></h1>
             <LoginForm openForgotPassword={()=>{setForgotPasswordVisible(true);}} />
             {isForgotPasswordVisible && (
                 <></>

@@ -13,7 +13,7 @@ export default function Button({ variant, children, className = '', disabled = f
   // Définir les classes Tailwind pour chaque variante
   const variantClasses = {
     cancelled: 'w-full bg-slate-200 text-slate-700 hover:bg-slate-400 hover:text-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-100 focus:ring-opacity-50 dark:bg-slate-300',
-    submit: 'w-full bg-gradient-to-r from-blue-600 to-blue-300 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gradient-to-r dark:from-blue-700 dark:to-blue-500',
+    submit: 'w-full bg-gradient-to-r from-blue-600 to-blue-300 text-white hover:from-blue-700 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gradient-to-r dark:from-blue-700 dark:to-blue-500',
     primary: 'rounded-xl bg-red-500 hover:bg-red-600 text-white drop-shadow-2xl dark:bg-red-700 dark:hover:bg-red-800',
     secondary: 'rounded-xl bg-orange-300 hover:bg-orange-500 border border-orange-400',
   };
