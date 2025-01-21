@@ -11,7 +11,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     // Fonction pour afficher les toasts avec différents types
     const showToast = (message: string, type: 'success' | 'warning' | 'error' = 'success', options?: ToastOptions) => {
         const defaultOptions: ToastOptions = {
-            className: 'mt-20 lg:mt-14',
+            className: 'mt-14',
             ...options,
         };
         switch (type) {
