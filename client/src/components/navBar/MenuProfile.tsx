@@ -14,10 +14,10 @@ interface MenuProfileProps{
 export default function MenuProfile({handleOpenProfile}:MenuProfileProps) {
     const {isAuthenticated} = useContext(AuthContext);
     return(
-        <div className="absolute top-14 right-0 bg-white w-96 border-2 rounded-lg">
-            <div className="flex justify-center items-center p-4 border-b-2 text-xl">
+        <div className="absolute top-14 right-0 bg-white w-96 border-2 rounded-lg dark:bg-gradient-to-tr dark:from-slate-700 dark:via-slate-800 dark:to-blue-950 dark:border-blue-800">
+            <div className="flex justify-center items-center p-4 border-b-2 text-xl dark:border-b-blue-800">
                 <span className="font-semibold text-blue-500">Menu</span>
-                <FontAwesomeIcon icon={faClose} onClick={handleOpenProfile} className="absolute right-2 p-3 text-red-400 rounded-lg cursor-pointer hover:bg-slate-100" />
+                <FontAwesomeIcon icon={faClose} onClick={handleOpenProfile} className="absolute right-2 p-3 text-red-400 rounded-lg cursor-pointer hover:bg-slate-100 dark:hover:bg-blue-800" />
             </div>
             <div className="p-3 overflow-y-auto max-h-4/6 space-y-4">
                 <CardProfile />
@@ -25,8 +25,8 @@ export default function MenuProfile({handleOpenProfile}:MenuProfileProps) {
                     <section className="flex flex-col bg-slate-100 p-3 rounded-xl gap-2 items-center dark:bg-slate-600">
                         <span className="text-base p-3">Vous n'êtes pas authentifié</span>
                         <div className="flex gap-5">
-                            <Link to='login' className="px-4 py-2 bg-slate-50 hover:bg-blue-300 rounded-lg shadow dark:bg-slate-700 dark:hover:bg-blue-800">Se Connecter</Link>
-                            <Link to='register' className="px-4 py-2 bg-slate-50 hover:bg-blue-300 rounded-lg shadow dark:bg-slate-700 dark:hover:bg-blue-800">S'inscrire</Link>
+                            <Link to='login' className="px-4 py-2 bg-slate-50 hover:bg-blue-300 rounded-lg shadow dark:bg-slate-700 dark:hover:bg-blue-900">Se Connecter</Link>
+                            <Link to='register' className="px-4 py-2 bg-slate-50 hover:bg-blue-300 rounded-lg shadow dark:bg-slate-700 dark:hover:bg-blue-900">S'inscrire</Link>
                         </div>
                     </section>
                 )}

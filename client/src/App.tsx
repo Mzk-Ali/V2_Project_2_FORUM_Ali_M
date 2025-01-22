@@ -8,6 +8,7 @@ import Footer from './layout/Footer';
 import AuthProvider from './contexts/AuthProvider';
 import { ToastProvider } from './contexts/ToastProvider';
 import { Flip, ToastContainer } from 'react-toastify';
+import ThemeProvider from './contexts/ThemeProvider';
 
 function App() {
 
@@ -15,24 +16,26 @@ function App() {
     <Router>
       <HelmetProvider>
         <AuthProvider>
-          <ToastProvider>
-            <Header />
-            <Main />
-            <Footer />
-            <ToastContainer
-              position="top-center"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick={false}
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-              transition={Flip}
-            />
-          </ToastProvider>
+          <ThemeProvider>
+            <ToastProvider>
+              <Header />
+              <Main />
+              <Footer />
+              <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Flip}
+              />
+            </ToastProvider>
+          </ThemeProvider>
         </AuthProvider>
       </HelmetProvider>
     </Router>
