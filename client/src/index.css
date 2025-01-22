@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+      @apply bg-white text-slate-700 dark:bg-gradient-to-tr from-slate-800 via-slate-700 to-slate-800 dark:text-slate-50;
+    }
+  }

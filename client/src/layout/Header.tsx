@@ -12,7 +12,7 @@ export default function Header() {
     }
 
     return(
-        <header className="fixed z-30 top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-indigo-300 to-blue-100/20 h-14">
+        <header className="fixed z-30 top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-indigo-300 to-blue-100/80 h-14 dark:from-blue-900">
             <NavBarMobile />
             <NavBarDesktop />
         </header>

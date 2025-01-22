@@ -6,7 +6,7 @@ export default function Footer() {
     const today = new Date();
     return(
         <footer className={`hidden sm:flex z-40 text-lg font-semibold backdrop-blur-sm px-5 py-5 bg-gradient-to-tr from-blue-500 to-blue-200 text-slate-700 inset-x-0 bottom-0 w-full max-h-52 flex-col dark:bg-gradient-to-tr dark:from-blue-700 dark:to-blue-500 dark:text-slate-200`}>
-            <div className="flex justify-between items-start p-3 bg-gradient-to-br from-orange-50/50 dark:from-orange-800/50 to-transparent rounded-sm">
+            <div className="flex justify-between items-start p-3 bg-gradient-to-br from-blue-50/50 dark:from-blue-800/50 to-transparent rounded-sm">
                 <div className="flex flex-col gap-2">
                     <span>Navigation</span>
                     <ul className="text-sm ml-10">
