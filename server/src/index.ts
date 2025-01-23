@@ -9,6 +9,9 @@ import { useCookieParser } from "./configs/cookieParser";
 
 // Importation des Routes
 import authRoute from "./routes/auth.routes";
+import categoryRoute from "./routes/category.routes";
+import topicRoute from "./routes/topic.routes";
+import postRoute from "./routes/post.routes";
 import sessionMiddleware from "./configs/session";
 
 // Charge les variables d'environnement
@@ -29,6 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/topic", topicRoute);
+app.use("/api/post", postRoute);
 
 
 
