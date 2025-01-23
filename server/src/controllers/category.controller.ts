@@ -5,7 +5,7 @@ import prisma from "../lib/prismaClient"
 // Récupère tous les Catégories
 export const getAllCategories = async (req: Request, res: Response) => {
     try {
-        const categories = prisma.category.findMany();
+        const categories = await prisma.category.findMany();
         
         return successResponse(res, 200, "Récupération de tous les Catégories réussi", categories)
     } catch (error) {
@@ -18,7 +18,7 @@ export const getTopicsByCategory = async (req: Request, res: Response) => {
     const { categoryID } = req.params;
 
     try {
-        const topics = prisma.topic.findMany({
+        const topics = await prisma.topic.findMany({
             where: {
                 categoryId: parseInt(categoryID),
             },
@@ -53,7 +53,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
     const { categoryID } = req.params;
 
     try {
-        prisma.category.delete({
+        await prisma.category.delete({
             where: {
                 id: parseInt(categoryID),
             },

@@ -5,7 +5,7 @@ import prisma from "../lib/prismaClient";
 // Récupère tous les Topics
 export const getAllTopics = async (req: Request, res: Response) => {
     try {
-        const topics = prisma.topic.findMany({
+        const topics = await prisma.topic.findMany({
             orderBy: {
                 createdAt: 'desc',
             },
@@ -22,7 +22,7 @@ export const getTopicById = async (req: Request, res: Response) => {
     const { topicID } = req.params;
 
     try {
-        const topic = prisma.topic.findUnique({
+        const topic = await prisma.topic.findUnique({
             where : { 
                 id: parseInt(topicID) 
             },
@@ -39,7 +39,7 @@ export const getPostsByTopic = async (req: Request, res: Response) => {
     const { topicID } = req.params;
 
     try {
-        const posts = prisma.post.findMany({
+        const posts = await prisma.post.findMany({
             where : {
                 topicId: parseInt(topicID),
             },
@@ -74,7 +74,7 @@ export const deleteTopic = async (req: Request, res: Response) => {
     const { topicID } = req.params;
 
     try {
-        prisma.topic.delete({
+        await prisma.topic.delete({
             where: {
                 id: parseInt(topicID),
             },

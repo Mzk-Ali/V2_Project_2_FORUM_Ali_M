@@ -7,7 +7,7 @@ export const getPostById = async (req: Request, res: Response) => {
     const { postID } = req.params;
 
     try {
-        const post = prisma.post.findUnique({
+        const post = await prisma.post.findUnique({
             where: {
                 id: parseInt(postID),
             },
@@ -44,7 +44,7 @@ export const deletePost = async (req: Request, res: Response) => {
     const { postID } = req.params;
 
     try {
-        prisma.post.delete({
+        await prisma.post.delete({
             where: {
                 id: parseInt(postID),
             },
