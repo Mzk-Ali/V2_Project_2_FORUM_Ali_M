@@ -53,4 +53,42 @@ model User {
   updatedAt           DateTime    @updatedAt
 
   roles               Role[]      @relation("UserRoles")
+  posts               Post[]
+}
+
+// Modèle Category
+model Category{
+  id                  Int         @id @default(autoincrement())
+  name                String      @unique @db.VarChar(100)
+
+  topics              Topic[]
+}
+
+// Modèle Topic
+model Topic{
+  id                  Int         @id @default(autoincrement())
+  title               String      @db.VarChar(255)
+  createdAt           DateTime    @default(now())
+  lock                Boolean     @default(false)
+  nbrPosts            Int         @default(0)
+  lastPostId          Int?        @unique
+  categoryId          Int
+
+  posts               Post[]
+  category            Category    @relation(fields: [categoryId], references: [id])
+  lastPost            Post?       @relation("TopicHasLastPost", fields: [lastPostId], references: [id])
+}
+
+// Modèle Post
+model Post{
+  id                  Int         @id @default(autoincrement())
+  message             String      @db.Text
+  createdAt           DateTime    @default(now())
+  isEdited            DateTime    @updatedAt
+
+  authorId            Int
+  topicId             Int
+  author              User        @relation(fields: [authorId], references: [id])
+  topic               Topic       @relation(fields: [topicId], references: [id])
+  topicAsLastPost     Topic?      @relation("TopicHasLastPost")
 }
