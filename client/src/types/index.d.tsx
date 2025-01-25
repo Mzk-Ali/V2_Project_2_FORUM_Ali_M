@@ -11,3 +11,9 @@ export interface User {
     photoProfile: string;
     displayFullName: boolean; 
 }
+
+export interface Category {
+    id: number,
+    name: string,
+    slug: string,
+}

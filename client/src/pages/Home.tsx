@@ -6,7 +6,7 @@ export default function Home() {
             <Helmet>
                 <title>Forum V2</title>
                 <meta name="description" content="Page d'Accueil du Forum V2" />
-                <meta name="keywords" content="" />
+                <meta name="keywords" content="OpenTalk" />
             </Helmet>
         </>
     )
