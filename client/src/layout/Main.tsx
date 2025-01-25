@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 const Home = lazy(() => import("../pages/Home"));
 const Register = lazy(() => import("../pages/Register"));
 const Login = lazy(() => import("../pages/Login"));
+const ChangePassword = lazy(() => import("../pages/ChangePassword"));
 const About = lazy(() => import("../pages/About"));
 const Categories = lazy(() => import("../pages/Categories"));
 const Topics = lazy(() => import("../pages/Topics"));
@@ -18,6 +19,7 @@ export default function Main() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/reset-password" element={<ChangePassword />} />
                     <Route path="/about" element={<About />} />
                     
                     {/* Page des catégories */}

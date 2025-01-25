@@ -14,3 +14,14 @@ export type LoginFormData = {
     password: string;
     rememberMe: boolean;
 };
+
+// Type du formulaire du reset password
+export type ForgotPasswordFormData = {
+    emailForForgetPassword: string;
+};
+
+// Type du formulaire du changement password
+export type ChangePasswordFormData = {
+    password: string;
+    confirmPassword: string;
+};
