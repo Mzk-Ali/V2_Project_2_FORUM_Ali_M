@@ -19,3 +19,21 @@ export const sendVerificationEmail = async (email: string) => {
         throw new Error('Échec de l\'envoi de l\'email');
     }
 };
+
+export const sendPasswordResetEmail = async(email : string) => {
+    const transporter = createMailerTransporter();
+    const resetToken = jwt.sign({ email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Réinitialisation de votre mot de passe',
+        text: `Cliquez sur ce lien pour réinitialiser votre mot de passe : ${process.env.REACT_APP_FRONT_URL}/reset-password?token=${resetToken}`,
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        throw new Error('Échec de l\'envoi de l\'email');
+    }
+}

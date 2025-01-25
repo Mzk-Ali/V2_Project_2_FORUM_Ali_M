@@ -21,14 +21,14 @@ export const registerValidator = [
         .customSanitizer(value => xss(value)),
     
     body('data.confirmPassword')
-    .custom((value, { req }) => {
-        // Vérification de la correspondance entre confirmPassword et password
-        if (value !== req.body.data.password) {
-            throw new Error('Les mots de passe doivent correspondre.');
-        }
-        return true;
-    })
-    .customSanitizer(value => xss(value)),
+        .custom((value, { req }) => {
+            // Vérification de la correspondance entre confirmPassword et password
+            if (value !== req.body.data.password) {
+                throw new Error('Les mots de passe doivent correspondre.');
+            }
+            return true;
+        })
+        .customSanitizer(value => xss(value)),
 
     body('data.lastName')
         .isLength({ min: 2, max: 50 })
@@ -59,3 +59,26 @@ export const loginValidator = [
     body('data.password')
         .isLength({ min: 6 }).withMessage('Le mot de passe doit contenir au moins 6 caractères.')
 ];
+
+export const resetPasswordValidator = [
+    body('data.password')
+        .isLength({ min: 12 })
+        .withMessage('Le mot de passe doit comporter au moins 12 caractères.')
+        .matches(/[A-Z]/)
+        .withMessage('Le mot de passe doit contenir au moins une lettre majuscule.')
+        .matches(/[0-9]/)
+        .withMessage('Le mot de passe doit contenir au moins un chiffre.')
+        .matches(/[^A-Za-z0-9]/)
+        .withMessage('Le mot de passe doit contenir au moins un caractère spécial.')
+        .customSanitizer(value => xss(value)),
+
+    body('data.confirmPassword')
+        .custom((value, { req }) => {
+            // Vérification de la correspondance entre confirmPassword et password
+            if (value !== req.body.data.password) {
+                throw new Error('Les mots de passe doivent correspondre.');
+            }
+            return true;
+        })
+        .customSanitizer(value => xss(value)),
+]
