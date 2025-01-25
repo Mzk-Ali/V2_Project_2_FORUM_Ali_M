@@ -4,7 +4,7 @@ import xss from "xss";
 import { errorResponse, successResponse } from "../utils/responseHandler";
 import { createUser, getUserByEmail, updateUser } from "../models/user.model";
 import { deleteCookie, setAuthTokenCookie } from "../services/cookie.service";
-import { sendVerificationEmail } from "../services/email.service";
+import { sendPasswordResetEmail, sendVerificationEmail } from "../services/email.service";
 import { decodedToken } from "../utils/jwt";
 import { Prisma } from "@prisma/client";
 import { RequestWithUser } from "../interfaces/requestWithUser.interface";
@@ -97,7 +97,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         // Vérification de la comparaison des mots de passe
-        const passwordMatch = bcrypt.compare(safePassword, user.password);
+        const passwordMatch = await bcrypt.compare(safePassword, user.password);
         if (!passwordMatch) {
             return errorResponse(res, 'Email ou mot de passe incorrect', null, 404);
         }
@@ -152,6 +152,59 @@ export const verifyEmail = async (req: Request, res: Response) => {
     
         await updateUser(user.id, { verified: true, status: "Active" });
         res.redirect('/login');
+    } catch (error) {
+        return errorResponse(res, 'Erreur du serveur', error)
+    }
+}
+
+// Controller pour demander une réinitialisation de mot de passe
+export const requestPasswordReset = async (req : Request, res : Response) => {
+    const { email } = req.body;
+
+    const safeEmail = xss(email);
+
+    try {
+        const user = await getUserByEmail(safeEmail);
+        if (!user) {
+            return errorResponse(res, 'Email non trouvé', null, 400)
+        }
+
+        await sendPasswordResetEmail(safeEmail);
+        return successResponse(res, 200, 'Un email de réinitialisation de mot de passe a été envoyé.')
+    } catch (error) {
+        return errorResponse(res, 'Erreur du serveur', error)
+    }
+}
+
+// Controller pour réinitialiser le mot de passe
+export const resetPasswordHandler = async (req: Request, res: Response) => {
+    const { data } = req.body;
+
+    // Échapper les entrées utilisateur pour éviter XSS
+    const safeToken = xss(data.token);
+    const safePassword = xss(data.password);
+    const safeConfirmPassword = xss(data.confirmPassword);
+    
+    // Vérification du token
+    if (typeof safeToken !== 'string') {
+        return errorResponse(res, 'Token manquant ou invalide', null, 400);
+    }
+
+    try {
+        const decoded = decodedToken(safeToken);
+        if (!decoded) {
+            return errorResponse(res, 'Token invalide', null, 400);
+        }
+        const user = await getUserByEmail(decoded.email);
+      
+        if (!user) {
+            return errorResponse(res, 'Utilisateur non trouvé', null, 404);
+        }
+      
+        const hashedPassword = await bcrypt.hash(safePassword, 10);
+        await updateUser(user.id, { password: hashedPassword });
+
+        return successResponse(res, 200, 'Votre mot de passe a été réinitialisé avec succès.')
     } catch (error) {
         return errorResponse(res, 'Erreur du serveur', error)
     }
