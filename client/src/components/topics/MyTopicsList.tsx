@@ -1,35 +1,22 @@
 import { useQuery } from "react-query";
-import TopicCard from "./TopicCard";
 import { useLocation } from "react-router-dom";
-import { fetchGetTopics } from "../../services/apiTopics";
-import { Category, User } from "../../types/index.d";
+import { Topic } from "./TopicsList";
+import TopicCard from "./TopicCard";
+import { fetchGetMyTopics } from "../../services/apiTopics";
 
-export interface Topic{
-    id: number,
-    title: string,
-    slug: string,
-    createdAt: string,
-    lock: boolean,
-    nbrPosts: number,
-    category: Category,
-    author: User,
-}
 
-export default function TopicsList() {
+export default function MyTopicsList() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
     
-    const category = queryParams.get('category');
-    const search = queryParams.get('search');
     const page = queryParams.get('page');
-    const sort = queryParams.get('sort');
 
-    const filterParams = `?category=${category || ""}&search=${search || ""}&page=${page || 1}&sort=${sort || "recent"}`;
+    const filterParams = `?page=${page || 1}`;
 
     const {data: topics, isLoading, isError, refetch} = useQuery({
-        queryKey: ['getTopics', filterParams],
-        queryFn: () => fetchGetTopics(filterParams),
+        queryKey: ['getMyTopics', filterParams],
+        queryFn: () => fetchGetMyTopics(filterParams),
     })
 
     if(isLoading){

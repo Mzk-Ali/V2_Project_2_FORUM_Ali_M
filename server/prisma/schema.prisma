@@ -54,6 +54,7 @@ model User {
 
   roles               Role[]      @relation("UserRoles")
   posts               Post[]
+  topics              Topic[]
 }
 
 // Modèle Category
@@ -69,15 +70,18 @@ model Category{
 model Topic{
   id                  Int         @id @default(autoincrement())
   title               String      @db.VarChar(255)
+  slug                String      @unique @db.VarChar(255)
   createdAt           DateTime    @default(now())
   lock                Boolean     @default(false)
   nbrPosts            Int         @default(0)
   lastPostId          Int?        @unique
   categoryId          Int
+  authorId            Int
 
   posts               Post[]
   category            Category    @relation(fields: [categoryId], references: [id])
   lastPost            Post?       @relation("TopicHasLastPost", fields: [lastPostId], references: [id])
+  author              User        @relation(fields: [authorId], references: [id])
 }
 
 // Modèle Post

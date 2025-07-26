@@ -19,7 +19,11 @@ export default function Pagination({itemsLength, itemsPerPage}: PaginationProps)
     const totalPages = Math.ceil(itemsLength / itemsPerPage);
 
     const handlePageChange = (page: number) => {
-        navigate(`?page=${page}`);
+        // navigate(`?page=${page}`);
+        queryParams.set("page", page.toString());
+        navigate({
+            search: queryParams.toString(),
+        });
     };
 
     const pageNumbers = [];

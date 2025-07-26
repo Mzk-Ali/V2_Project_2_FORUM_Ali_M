@@ -6,7 +6,7 @@ export default function Topics() {
     return(
         <>
             <FiltersSection />
-            <div className="flex gap-4 my-5">
+            <div className="flex justify-center items-start gap-4 my-5">
                 <MainSection />
                 <SideSection />
             </div>
