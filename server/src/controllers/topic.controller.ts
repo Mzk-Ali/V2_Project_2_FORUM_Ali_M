@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { errorResponse, successResponse } from "../utils/responseHandler"
 import prisma from "../lib/prismaClient";
+import { RequestWithUser } from "../interfaces/requestWithUser.interface";
 
 // Récupère tous les Topics
 export const getAllTopics = async (req: Request, res: Response) => {
@@ -12,6 +13,43 @@ export const getAllTopics = async (req: Request, res: Response) => {
         });
 
         return successResponse(res, 200, 'Récupération des Topics réussi', topics);
+    } catch (error) {
+        return errorResponse(res, 'Erreur du serveur', error)
+    }
+}
+
+export const getFiltersTopics = async (req: Request, res: Response) => {
+    try {
+        const topics = await prisma.topic.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            },
+            include: {
+                category: true,
+                author: true,
+            }
+        });
+        return successResponse(res, 200, 'Récupération des Topics réussi', topics);
+    } catch (error) {
+        return errorResponse(res, 'Erreur du serveur', error)
+    }
+}
+
+export const getMyTopics = async (req: RequestWithUser, res: Response) => {
+    try {
+        const topics = await prisma.topic.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            },
+            where: {
+                authorId: req.user?.id,
+            },
+            include: {
+                category: true,
+                author: true,
+            }
+        });
+        return successResponse(res, 200, 'Récupération de mes Topics réussi', topics);
     } catch (error) {
         return errorResponse(res, 'Erreur du serveur', error)
     }

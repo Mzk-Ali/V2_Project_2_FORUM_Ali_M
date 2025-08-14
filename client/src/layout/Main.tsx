@@ -10,6 +10,7 @@ const Categories = lazy(() => import("../pages/Categories"));
 const Topics = lazy(() => import("../pages/Topics"));
 const TopicsByCategory = lazy(() => import("../pages/TopicsByCategory"));
 const PostsByTopic = lazy(() => import("../pages/PostsByTopic"));
+const MyTopics = lazy(() => import("../pages/MyTopics"));
 
 export default function Main() {
     return(
@@ -29,11 +30,15 @@ export default function Main() {
                     <Route path="/categories/:categorySlug" element={<TopicsByCategory />} />
 
                     {/* Page des posts d'un topic dans une catégorie */}
-                    <Route path="/categories/:categorySlug/topics/:topicSlug" element={<PostsByTopic />} />
+                    <Route path="/categories/:categorySlug/topic/:topicSlug" element={<PostsByTopic />} />
 
 
                     {/* Page contenant la liste des topics independamment des catégories */}
                     <Route path="/topics" element={<Topics />} />
+
+                    {/* Page contenant la liste de mes Topics */}
+                    <Route path="/myTopics" element={<MyTopics />} />
+
                 </Routes>
             </Suspense>
         </main>
